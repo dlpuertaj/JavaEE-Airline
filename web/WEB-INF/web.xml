@@ -4,6 +4,10 @@
         <description>ServletContextListener</description>
         <listener-class>com.airline.controllers.AirlineListener</listener-class>
     </listener>
+    <listener>
+        <description>HttpSessionListener</description>
+        <listener-class>com.airline.controllers.NewServletListener</listener-class>
+    </listener>
     <session-config>
         <session-timeout>
             30

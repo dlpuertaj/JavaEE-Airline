@@ -12,9 +12,9 @@ import javax.ejb.Stateful;
  *
  * @author dlpuertaj
  */
-@Stateful(name = "flightStatefull")
+@Stateful(name = "flightStateful")
 //@LocalBean //Solo puede ser accedido por aplicaciones que estan corriendo de manera local
-public class FlightServiceStatefullBean implements FlightLocal{
+public class FlightServiceStatefulBean implements FlightLocal{
 
     private Integer id = 2348357;
     private Integer price = 400;
@@ -28,7 +28,7 @@ public class FlightServiceStatefullBean implements FlightLocal{
         return "FlightService{" + "id=" + id + ", price=" + price + ", numSeats=" + numSeats + ", destination=" + destination + ", from=" + from + ", airplainModel=" + airplainModel + '}';
     }
     
-    public FlightServiceStatefullBean(){
+    public FlightServiceStatefulBean(){
         
     }
 

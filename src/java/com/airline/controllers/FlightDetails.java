@@ -32,18 +32,18 @@ public class FlightDetails extends HttpServlet {
     /* Es posible que se este refiriendo a un objeto diferente
      * ya que el pool contiene muchos objetos. Esta caracteristica
      * se da por ser Stateless*/
-    @EJB(beanName = "flightStateless") // comentado para probar sin usarlo y obtener el objeto manuelmente
+//    @EJB(beanName = "flightStateless") // comentado para probar sin usarlo y obtener el objeto manuelmente
     private FlightLocal fs; 
     /**/
     
-    @EJB(beanName = "flightStateless") // comentado para probar sin usarlo y obtener el objeto manuelmente
-    private FlightLocal fs2; 
+//    @EJB(beanName = "flightStateless") // comentado para probar sin usarlo y obtener el objeto manuelmente
+//    private FlightLocal fs2; 
         
-    @EJB(beanName = "flightStatefull") // comentado para probar sin usarlo y obtener el objeto manuelmente
-    private FlightLocal fsStatefull;
+//    @EJB(beanName = "flightStatefull") // comentado para probar sin usarlo y obtener el objeto manuelmente
+    private FlightLocal fsStateful;
     
-    @EJB(beanName = "flightStatefull") // comentado para probar sin usarlo y obtener el objeto manuelmente
-    private FlightLocal fsStatefull2; 
+//    @EJB(beanName = "flightStatefull") // comentado para probar sin usarlo y obtener el objeto manuelmente
+//    private FlightLocal fsStatefull2; 
     
     /*Al usar el bean remoto, está consumiendo mas recursos computacionales
      * y fisicos ya que con el local, el servidor ya presupone que es local*/
@@ -66,16 +66,19 @@ public class FlightDetails extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-//        try {
-//            /*JNDI contiene referencias a recursos*/
-//            Context context = new InitialContext();
-//            Object fObj = context.lookup("java:global/WebOne/FlightService!com.airline.service.FlightServiceStatlessBean");
-//            fs = (FlightServiceStatlessBean) fObj;
-//            
-//        } catch (NamingException e) {
-//            System.out.println("Naming exception has occured when truing to lookup the FlightServiceStatlessBean Enterprise Java Bean");
-//            e.printStackTrace();
-//        } 
+        try {
+            /*JNDI contiene referencias a recursos*/
+            Context context = new InitialContext();
+            Object fObj = context.lookup("java:global/WebOne/flightStateless!com.airline.service.FlightLocal");
+            this.fs = (FlightLocal) fObj;
+            
+            Object fObjStateful = context.lookup("java:global/WebOne/flightStateful!com.airline.service.FlightLocal");
+            this.fsStateful = (FlightLocal) fObjStateful;
+            
+        } catch (NamingException e) {
+            System.out.println("Naming exception has occured when truing to lookup the FlightServiceStatlessBean Enterprise Java Bean");
+            e.printStackTrace();
+        } 
        
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -89,17 +92,17 @@ public class FlightDetails extends HttpServlet {
             
             //Stateless
             out.println("<h3> Flight details "+fs.getFrom()+" to "+fs.getDestination()+"</h3>");
-            fs2.setFrom("Paris");
-            fs2.setDestination("Rome");
-            out.println("<h3> Flight details "+fs.getFrom()+" to "+fs.getDestination()+"</h3>");
+//            fs2.setFrom("Paris");
+//            fs2.setDestination("Rome");
+//            out.println("<h3> Flight details "+fs.getFrom()+" to "+fs.getDestination()+"</h3>");
             /* Se corre el metodo de una instancea aleatoria del pool
              * ya que es statless*/
             //Statefull
-            out.println("<h3> Flight details "+fsStatefull.getFrom()+" to "+fsStatefull.getDestination()+"</h3>");
-            fsStatefull2.setFrom("Bogotá");
-            fsStatefull2.setDestination("Cartagena");
-            out.println("<h3> Flight details "+fsStatefull.getFrom()+" to "+fsStatefull.getDestination()+"</h3>");
-            out.println("<h3> Flight details "+fsStatefull2.getFrom()+" to "+fsStatefull2.getDestination()+"</h3>");
+            out.println("<h3> Flight details "+fsStateful.getFrom()+" to "+fsStateful.getDestination()+"</h3>");
+//            fsStatefull2.setFrom("Bogotá");
+//            fsStatefull2.setDestination("Cartagena");
+//            out.println("<h3> Flight details "+fsStatefull.getFrom()+" to "+fsStatefull.getDestination()+"</h3>");
+//            out.println("<h3> Flight details "+fsStatefull2.getFrom()+" to "+fsStatefull2.getDestination()+"</h3>");
 
             /* En este claso solo se crea un objeto, asi que la referencia
              * sera la misma que se ha creado   
