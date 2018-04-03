@@ -6,7 +6,7 @@
     </listener>
     <listener>
         <description>HttpSessionListener</description>
-        <listener-class>com.airline.controllers.NewServletListener</listener-class>
+        <listener-class>com.airline.controllers.SessionListener</listener-class>
     </listener>
     <session-config>
         <session-timeout>

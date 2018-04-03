@@ -5,15 +5,17 @@
  */
 package com.airline.controllers;
 
+import com.airline.models.FlightClass;
 import com.airline.models.Gender;
 import com.airline.models.Passenger;
+import com.airline.service.PassengerService;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -29,6 +31,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet({"/addPassenger"})
 public class AddPassenger extends HttpServlet {
 
+    @EJB
+    PassengerService ps;
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -42,15 +46,39 @@ public class AddPassenger extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+
+        Passenger passenger = new Passenger();
+        
+        passenger.setFirstName("David");
+        passenger.setLastName("Puerta");
+        
+        Calendar c = Calendar.getInstance();
+        
+        c.set(Calendar.YEAR, 1988);
+        c.set(Calendar.MONTH, 1);
+        c.set(Calendar.DAY_OF_MONTH, 5);
+        
+        Date dob = c.getTime();
+        
+        passenger.setDob(dob);
+        
+        passenger.setGender(Gender.Male);
+        
+        passenger.setFlightClass(FlightClass.Coach);
+        
+        System.out.println(passenger.toString());
+        
+        ps.addPassenger(passenger);
+        
         /* Usamos setAtribute para inicializar los atributos que se van a usar
          * en el formulario */
-        request.setAttribute("first_name", "");
-        request.setAttribute("last_name", "");
-        request.setAttribute("dob", "");
+//        request.setAttribute("first_name", "");
+//        request.setAttribute("last_name", "");
+//        request.setAttribute("dob", "");
         
         /* Usamos RequestDispatcher para que nos lleve a la pagina jsp del formulario*/
-        RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/add_passenger.jsp");
-        view.forward(request, response);
+//        RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/add_passenger.jsp");
+//        view.forward(request, response);
     }
 
     /**
