@@ -15,7 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+
 
 /**
  *
@@ -24,8 +24,6 @@ import javax.persistence.Transient;
 @Entity
 public class Passenger implements Serializable {
 
-    @Transient
-    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
