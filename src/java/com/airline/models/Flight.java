@@ -13,6 +13,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -38,6 +40,20 @@ public class Flight implements Serializable {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date flightTime;
+
+    /*Hacemos que flight tenga una relación una a uno con Airplain.
+     * Hacemos que dicha relación sea por medio de la llave foranea*/
+    @OneToOne
+    @JoinColumn(name = "airplane_fk")//agrega llave foranea airplain_fk
+    private Airplane airplaneDetail;
+
+    public Airplane getAirplainDetail() {
+        return airplaneDetail;
+    }
+
+    public void setAirplainDetail(Airplane airplainDetail) {
+        this.airplaneDetail = airplainDetail;
+    }
 
     public FlightDestinations getFlightOrigin() {
         return flightOrigin;
