@@ -7,6 +7,7 @@ package com.airline.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -14,6 +15,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,6 +25,9 @@ import javax.persistence.TemporalType;
  *
  * @author dlpuertaj
  */
+@NamedQuery(name = "Flight.findById",
+            query = "SELECT f FROM Flight f WHERE f.id = :id")//Nos permite agregar query para buscar datos
+
 @Entity
 public class Flight implements Serializable {
 
@@ -40,6 +46,10 @@ public class Flight implements Serializable {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date flightTime;
+
+    /* Un vuelo tiene muchos pilotos*/
+    @OneToMany(mappedBy = "flightForPilot")
+    private List<Pilot> pilots;
 
     /*Hacemos que flight tenga una relación una a uno con Airplain.
      * Hacemos que dicha relación sea por medio de la llave foranea*/
@@ -95,6 +105,22 @@ public class Flight implements Serializable {
         this.id = id;
     }
 
+    public List<Pilot> getPilots() {
+        return pilots;
+    }
+
+    public void setPilots(List<Pilot> pilots) {
+        this.pilots = pilots;
+    }
+
+    public Airplane getAirplaneDetail() {
+        return airplaneDetail;
+    }
+
+    public void setAirplaneDetail(Airplane airplaneDetail) {
+        this.airplaneDetail = airplaneDetail;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -117,7 +143,7 @@ public class Flight implements Serializable {
 
     @Override
     public String toString() {
-        return "Flight{" + "id=" + id + ", flightOrigin=" + flightOrigin + ", flightDestination=" + flightDestination + ", price=" + price + ", flightTime=" + flightTime + '}';
+        return "Flight{" + "id=" + id + ", flightOrigin=" + flightOrigin + ", flightDestination=" + flightDestination + ", price=" + price + ", flightTime=" + flightTime + ", pilots=" + pilots + ", airplaneDetail=" + airplaneDetail + '}';
     }
 
 }
