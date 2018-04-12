@@ -6,10 +6,12 @@
 package com.airline.service;
 
 import com.airline.models.Passenger;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -26,6 +28,10 @@ public class PassengerService {
     public void addPassenger(Passenger p){
         em.persist(p);
     }
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    
+    public List<Passenger> getPassengers(){
+        TypedQuery<Passenger> query = em.createQuery("SELECT p FROM Passenger p",Passenger.class);
+        List<Passenger> pList = query.getResultList();
+        return pList;
+    }
 }

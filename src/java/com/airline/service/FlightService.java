@@ -32,8 +32,10 @@ public class FlightService {
     EntityManager em;
 
     public void addFlight(Flight flight, Airplane airplane) {
+        /* Se persisten los dos a pesar de que avion se agrega a vuelo
+         * pero se puede hacer una propagación en cascada*/
         em.persist(flight);
-        em.persist(airplane);
+        //em.persist(airplane); - propagated and cascaded from flight and saved automaticlly
     }
 
     public void addPilotToFlight(String pilotId, String flightId) {

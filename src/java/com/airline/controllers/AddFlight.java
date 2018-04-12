@@ -10,7 +10,6 @@ import com.airline.models.Flight;
 import com.airline.models.FlightDestinations;
 import com.airline.service.FlightService;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.Date;
 import javax.ejb.EJB;
@@ -64,7 +63,7 @@ public class AddFlight extends HttpServlet {
         
         Airplane plane = new Airplane();
         
-        plane.setModelName("Boeing 747");
+        plane.setModelName("747");
         plane.setPlaneMake("Boeing");
         plane.setSeatingCapacity(250);
         

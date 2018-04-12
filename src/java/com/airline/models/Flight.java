@@ -8,6 +8,7 @@ package com.airline.models;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -53,7 +54,7 @@ public class Flight implements Serializable {
 
     /*Hacemos que flight tenga una relación una a uno con Airplain.
      * Hacemos que dicha relación sea por medio de la llave foranea*/
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})//Cascade propagation with airplane
     @JoinColumn(name = "airplane_fk")//agrega llave foranea airplain_fk
     private Airplane airplaneDetail;
 

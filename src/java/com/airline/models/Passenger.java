@@ -21,6 +21,7 @@ import javax.persistence.TemporalType;
  *
  * @author dlpuertaj
  */
+
 @Entity
 public class Passenger implements Serializable {
 
