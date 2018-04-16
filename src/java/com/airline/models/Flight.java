@@ -16,6 +16,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -51,6 +53,11 @@ public class Flight implements Serializable {
     /* Un vuelo tiene muchos pilotos*/
     @OneToMany(mappedBy = "flightForPilot")
     private List<Pilot> pilots;
+    
+    
+    @ManyToMany
+    @JoinTable(name = "f_p_join", joinColumns = @JoinColumn(name = "flight_fk"), inverseJoinColumns = @JoinColumn(name = "passenger_fk"))//Nueva tabla en la db para unir vuelos con pasajeros
+    private List<Passenger> passengers;
 
     /*Hacemos que flight tenga una relación una a uno con Airplain.
      * Hacemos que dicha relación sea por medio de la llave foranea*/
@@ -140,6 +147,14 @@ public class Flight implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public List<Passenger> getPassengers() {
+        return passengers;
+    }
+
+    public void setPasengers(List<Passenger> passengers) {
+        this.passengers = passengers;
     }
 
     @Override

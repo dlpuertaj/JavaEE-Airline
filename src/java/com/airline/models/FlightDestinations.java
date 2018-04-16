@@ -16,5 +16,6 @@ public enum FlightDestinations {
     Rome,
     Paris,
     Amsterdam,
-    Cartagena
+    Cartagena,
+    London
 }

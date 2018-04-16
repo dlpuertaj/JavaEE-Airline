@@ -40,39 +40,55 @@ public class AddFlight extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        /*El nombre del parámetro es el nombre del formulario*/
+        
         Flight flight = new Flight();
         
-        flight.setFlightOrigin(FlightDestinations.New_York);
-        flight.setFlightDestination(FlightDestinations.Los_Angeles);
-        flight.setPrice(400);
+        String from_destination = request.getParameter("from_destination");
+        flight.setFlightOrigin(FlightDestinations.valueOf(from_destination));
+        
+        String to_destination = request.getParameter("to_destination");
+        flight.setFlightDestination(FlightDestinations.valueOf(to_destination));
+        
+        Integer price = Integer.parseInt(request.getParameter("price"));
+        flight.setPrice(price);
+        
+        Integer year = Integer.parseInt(request.getParameter("year"));
+        Integer month = Integer.parseInt(request.getParameter("month"));
+        Integer day = Integer.parseInt(request.getParameter("day"));
+        Integer hour = Integer.parseInt(request.getParameter("hour"));
+        Integer minute = Integer.parseInt(request.getParameter("minute"));
         Calendar cal = Calendar.getInstance();
         
-        cal.set(Calendar.YEAR, 2014);
-        cal.set(Calendar.MONTH, 10);
-        cal.set(Calendar.DAY_OF_MONTH, 14);
-        cal.set(Calendar.HOUR_OF_DAY, 19);
-        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH, day);
+        cal.set(Calendar.HOUR_OF_DAY, hour);
+        cal.set(Calendar.MINUTE, minute);
         
         Date date = cal.getTime();
-        
-        System.out.println(date);
-        
+
         flight.setFlightTime(date);
         
         Airplane plane = new Airplane();
         
-        plane.setModelName("747");
-        plane.setPlaneMake("Boeing");
-        plane.setSeatingCapacity(250);
+        String airPlaneModel = request.getParameter("airplane_model");
+        plane.setModelName(airPlaneModel);
+        
+        String airPlaneMake = request.getParameter("airplane_make");
+        plane.setPlaneMake(airPlaneMake);
+        
+        Integer seating = Integer.parseInt(request.getParameter("airplane_seating"));
+        plane.setSeatingCapacity(seating);
         
         flight.setAirplainDetail(plane);
         
-        System.out.println(flight);
-        System.out.println(plane);
-        
         fs.addFlight(flight, plane);
+        
+        response.sendRedirect("Flights");
     }
 
     

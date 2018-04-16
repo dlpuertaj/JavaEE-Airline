@@ -8,6 +8,8 @@ package com.airline.controllers;
 import com.airline.models.FlightClass;
 import com.airline.models.Gender;
 import com.airline.models.Passenger;
+import com.airline.models.Pilot;
+import com.airline.models.PilotRank;
 import com.airline.service.PassengerService;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,38 +49,24 @@ public class AddPassenger extends HttpServlet {
             throws ServletException, IOException {
         
 
-        Passenger passenger = new Passenger();
+        String firstName = request.getParameter("first_name");
+        String lastName = request.getParameter("last_name");
+        Integer license = Integer.parseInt(request.getParameter("license"));
+        String rank = request.getParameter("pilot_rank");
         
-        passenger.setFirstName("David");
-        passenger.setLastName("Puerta");
         
-        Calendar c = Calendar.getInstance();
+        Passenger p = new Passenger();
+        p.setFirstName(firstName);
+        p.setLastName(lastName);
+        p.setPilotLicense(license);
+        p.setPilotRank(PilotRank.valueOf(rank));
         
-        c.set(Calendar.YEAR, 1988);
-        c.set(Calendar.MONTH, 1);
-        c.set(Calendar.DAY_OF_MONTH, 5);
+        String flightId = request.getParameter("fId");
         
-        Date dob = c.getTime();
+        ps.addNewPilotToFlight(p, flightId);
         
-        passenger.setDob(dob);
+        response.sendRedirect("Flights");
         
-        passenger.setGender(Gender.Male);
-        
-        passenger.setFlightClass(FlightClass.Coach);
-        
-        System.out.println(passenger.toString());
-        
-        ps.addPassenger(passenger);
-        
-        /* Usamos setAtribute para inicializar los atributos que se van a usar
-         * en el formulario */
-//        request.setAttribute("first_name", "");
-//        request.setAttribute("last_name", "");
-//        request.setAttribute("dob", "");
-        
-        /* Usamos RequestDispatcher para que nos lleve a la pagina jsp del formulario*/
-//        RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/add_passenger.jsp");
-//        view.forward(request, response);
     }
 
     /**

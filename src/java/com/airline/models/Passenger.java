@@ -7,12 +7,14 @@ package com.airline.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -44,6 +46,9 @@ public class Passenger implements Serializable {
     @Enumerated(EnumType.STRING)
     private FlightClass flightClass;
 
+    @ManyToMany(mappedBy = "passengers")
+    private List<Flight> flights;
+    
     public Passenger() {
         super();
     }
@@ -94,6 +99,14 @@ public class Passenger implements Serializable {
 
     public void setFlightClass(FlightClass flightClass) {
         this.flightClass = flightClass;
+    }
+
+    public List<Flight> getFlights() {
+        return flights;
+    }
+
+    public void setFlights(List<Flight> flights) {
+        this.flights = flights;
     }
 
     @Override
