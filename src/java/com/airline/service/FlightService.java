@@ -59,7 +59,10 @@ public class FlightService {
         p.setFlightForPilot(f);
     }
     
-    public void addPassengerToFlight(String pId, String fId){}
+    public void addPassengerToFlight(String pId, String fId){
+    // TODO
+    
+    }
     
     /*Get list of all the flights*/
     public List<Flight> getFlights(){

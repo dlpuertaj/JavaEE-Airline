@@ -18,6 +18,7 @@
 
         <table>
             <tr>
+                <th>Id</th>
                 <th>First name</th>
                 <th>Last name</th>
                 <th>Gender</th>
@@ -28,6 +29,7 @@
                 for (int i = 0; i < pList.size(); i++) {
             %>
             <tr>
+                <td><%= pList.get(i).getId() %></td>
                 <td><%= pList.get(i).getFirstName() %></td>
                 <td><%= pList.get(i).getLastName() %></td>
                 <td><%= pList.get(i).getDob() %></td>
