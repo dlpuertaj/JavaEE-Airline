@@ -4,6 +4,7 @@
     Author     : dlpuertaj
 --%>
 
+<%@page import="com.airline.models.Passenger"%>
 <%@page import="com.airline.models.Pilot"%>
 <%@page import="com.airline.models.Flight"%>
 <%@page import="java.util.List"%>
@@ -84,7 +85,26 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="8" style="text-align: center">No passengers on this flight yet</td>
+                <td colspan="9" style="text-align: center">
+                    <% 
+                        if(!fList.get(i).getPassengers().isEmpty()){
+                            List<Passenger> passengerList = (List<Passenger>)fList.get(i).getPassengers();
+                            
+                            for (int k = 0; k < passengerList.size(); k++) {
+                    %>
+                                <%= k+1  %>)<%= passengerList.get(k).getFirstName() %> <%= passengerList.get(k).getLastName() %> <br/>
+                    <% 
+                            }//for
+                        }else{
+                    %>
+                    
+                            No psasenger on this flight yet
+                    
+                    <% 
+                        }//else
+                        
+                    %>
+                </td>
             </tr>
 
             <%

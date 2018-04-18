@@ -4,6 +4,7 @@
     Author     : dlpuertaj
 --%>
 
+<%@page import="com.airline.models.Flight"%>
 <%@page import="com.airline.models.Passenger"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -38,7 +39,24 @@
             </tr>
             
             <tr>
-                <td colspan="4">No flight tickets yet</td>
+                <td colspan="5">
+                    <% 
+                        if(!pList.get(i).getFlights().isEmpty()){
+                            List<Flight> fList = pList.get(i).getFlights();
+                            for (int k = 0; k < fList.size(); k++) {           
+                    %>
+                    
+                    <%= k+1 %>) <%= fList.get(k).getFlightOrigin()%> to <%= fList.get(k).getFlightDestination() %> at <%= fList.get(k).getFlightTime() %>
+                    
+                    
+                    <%      }//for
+                        }else{
+                    %>
+                            The passenger has no ticket yet
+                    <% 
+                        }
+                    %>
+                </td>
             </tr>
 
             <%

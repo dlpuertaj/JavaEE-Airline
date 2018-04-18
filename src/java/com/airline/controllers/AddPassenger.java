@@ -90,9 +90,7 @@ public class AddPassenger extends HttpServlet {
         
         ps.addPassenger(p);
         
-        
-        
-        
+
         //Guardamos el atributo error en el request como falso
         //request.setAttribute("errors", false);
         //Passenger p = new Passenger();//Creamos objeto Passenger para guardar los atributos

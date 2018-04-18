@@ -7,6 +7,7 @@ package com.airline.service;
 
 import com.airline.models.Airplane;
 import com.airline.models.Flight;
+import com.airline.models.Passenger;
 import com.airline.models.Pilot;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -14,6 +15,9 @@ import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -39,6 +43,7 @@ public class FlightService {
     }
 
     public void addPilotToFlight(String pilotId, String flightId) {
+        
         TypedQuery<Flight> fQuery = em.createNamedQuery("Flight.findById", Flight.class);
 
         fQuery.setParameter("id", Integer.parseInt(flightId));
@@ -57,11 +62,54 @@ public class FlightService {
         f.setPilots(pList);
         
         p.setFlightForPilot(f);
+        
     }
     
     public void addPassengerToFlight(String pId, String fId){
-    // TODO
-    
+        /* Get passenger by id*/
+        Passenger p; 
+        
+        /* Start tamplate for a criteria query*/
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        
+        CriteriaQuery<Passenger> cPassenger = builder.createQuery(Passenger.class);
+        
+        Root<Passenger> pRoot = cPassenger.from(Passenger.class);
+        /* Enf tamplate for a criteria query*/
+        
+        cPassenger.select(pRoot).where(builder.equal(pRoot.get("id").as(Integer.class), pId));
+        
+        TypedQuery<Passenger> pQuery = em.createQuery(cPassenger);
+        
+        p = pQuery.getSingleResult();
+        
+        /* Al hacerlo de esta manera evitamos errores ya que no se
+         * usa un String como en el método getFlights() por lo
+         * que es mas seguro usando CriteriaQuery*/
+        
+        //Buscamos el vuelo
+        /* Start tamplate for a criteria query*/
+        builder = em.getCriteriaBuilder();
+        
+        CriteriaQuery<Flight> cFlight = builder.createQuery(Flight.class);
+        
+        Root<Flight> fRoot = cFlight.from(Flight.class);
+        /* Enf tamplate for a criteria query*/
+        
+        cFlight.select(fRoot).where(builder.equal(fRoot.get("id").as(Integer.class), fId));
+        
+        TypedQuery<Flight> fQuery = em.createQuery(cFlight);
+        
+        Flight f = fQuery.getSingleResult();
+        
+        /*Asociamos pasajero a vuelo*/
+        
+        List<Passenger> pList = f.getPassengers();
+        pList.add(p);
+        f.setPasengers(pList);
+        
+        p.getFlights().add(f);
+        
     }
     
     /*Get list of all the flights*/
