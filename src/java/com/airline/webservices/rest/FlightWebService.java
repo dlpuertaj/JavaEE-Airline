@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -45,5 +46,15 @@ public class FlightWebService {
         List<Flight> fList = fs.getFlights();
         
         return fList;
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("{flight_id}")
+    public Flight getFlight(@PathParam("flight_id") Integer flight_id){
+        //localhost:8080/WebOne/airlineservices/rest/flights/id
+        Flight f = fs.getFlight(flight_id);
+        
+        return f;
     }
 }

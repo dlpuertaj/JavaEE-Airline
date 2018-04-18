@@ -122,4 +122,16 @@ public class FlightService {
         fList = query.getResultList();
         return fList;
     }
+    
+    public Flight getFlight(Integer id){
+        
+        TypedQuery<Flight> fQuery = em.createNamedQuery("Flight.findById", Flight.class);
+
+        fQuery.setParameter("id", id);
+
+        Flight f = fQuery.getSingleResult();//El vuelo con el id del typedQuery
+
+        
+        return f;
+    }
 }

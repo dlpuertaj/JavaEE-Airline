@@ -79,6 +79,26 @@ public class PassengerService {
         //asociamos pasajero a vuelo
         f.getPassengers().add(p);
     }
+    
+        public Passenger getPassenger(Integer id){
+        /* Start tamplate for a criteria query*/
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        
+        CriteriaQuery<Passenger> cPassenger = builder.createQuery(Passenger.class);
+        
+        Root<Passenger> pRoot = cPassenger.from(Passenger.class);
+        /* Enf tamplate for a criteria query*/
+        
+        cPassenger.select(pRoot).where(builder.equal(pRoot.get("id").as(Integer.class), id));
+        
+        TypedQuery<Passenger> pQuery = em.createQuery(cPassenger);
+        
+        Passenger p = pQuery.getSingleResult();
+        
+        return p;
+    }
+        
+        
     public List<Passenger> getPassengers(){
         TypedQuery<Passenger> query = em.createQuery("SELECT p FROM Passenger p",Passenger.class);
         List<Passenger> pList = query.getResultList();

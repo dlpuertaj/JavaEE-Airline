@@ -5,6 +5,7 @@
  */
 package com.airline.webservices.rest;
 
+import com.airline.models.Flight;
 import com.airline.models.Passenger;
 import com.airline.service.PassengerService;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -44,5 +46,15 @@ public class PassengerWebService {
         List<Passenger>pList = ps.getPassengers();
         
         return pList;
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_XML)
+    @Path("{passenger_id}")
+    public Passenger getPassenger(@PathParam("passenger_id") Integer passenger_id){
+        //localhost:8080/WebOne/airlineservices/rest/flights/id
+        Passenger p = ps.getPassenger(passenger_id);
+        
+        return p;
     }
 }
