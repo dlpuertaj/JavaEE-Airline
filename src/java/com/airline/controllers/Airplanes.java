@@ -1,14 +1,18 @@
-  /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package com.airline.controllers;
 
-import com.airline.service.PassengerService;
+import com.airline.models.Airplane;
+import com.airline.models.Flight;
+import com.airline.service.FlightService;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,11 +23,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author dlpuertaj
  */
-@WebServlet(name = "AddFlightTicketToPassenger", urlPatterns = {"/AddFlightTicketToPassenger"})
-public class AddFlightTicketToPassenger extends HttpServlet {
+@WebServlet(name = "Airplanes", urlPatterns = {"/Airplanes"})
+public class Airplanes extends HttpServlet {
 
     @EJB
-    PassengerService ps;
+    FlightService fs;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,18 +40,31 @@ public class AddFlightTicketToPassenger extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AddPassengerToFlight</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AddPassengerToFlight at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        
+        List<Airplane> airplanesList = new ArrayList<>();
+        List<Flight> fList = fs.getFlights();
+        for (Flight f : fList) {
+            airplanesList.add(f.getAirplaneDetail());
         }
+        
+        request.setAttribute("airplanes", airplanesList);
+        
+        RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/airplanes_list.jsp");
+        
+        view.forward(request, response);
+
+//        try (PrintWriter out = response.getWriter()) {
+//            /* TODO output your page here. You may use following sample code. */
+//            out.println("<!DOCTYPE html>");
+//            out.println("<html>");
+//            out.println("<head>");
+//            out.println("<title>Servlet Airplanes</title>");            
+//            out.println("</head>");
+//            out.println("<body>");
+//            out.println("<h1>Servlet Airplanes at " + request.getContextPath() + "</h1>");
+//            out.println("</body>");
+//            out.println("</html>");
+//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -76,13 +93,7 @@ public class AddFlightTicketToPassenger extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String pId = request.getParameter("pId");
-        String fId = request.getParameter("fId");
-        
-        ps.addFlightTicketToPassenger(fId, pId);
-        
-        response.sendRedirect("Passengers");
+        processRequest(request, response);
     }
 
     /**

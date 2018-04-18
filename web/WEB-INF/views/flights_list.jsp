@@ -41,8 +41,8 @@
                 <td><%= fList.get(i).getFlightTime()%></td>
                 <td><%= fList.get(i).getPrice()%></td>
 
-                <td><%= fList.get(i).getAirplainDetail().getPlaneMake() + " " + fList.get(i).getAirplainDetail().getModelName()%></td>
-                <td><%= fList.get(i).getAirplainDetail().getSeatingCapacity()%></td>
+                <td><%= fList.get(i).getAirplaneDetail().getPlaneMake() + " " + fList.get(i).getAirplaneDetail().getModelName()%></td>
+                <td><%= fList.get(i).getAirplaneDetail().getSeatingCapacity()%></td>
 
                 <td>
 
@@ -111,5 +111,7 @@
                 }
             %>
         </table>
+        <a href="index.html">Inicio</a>
+        <a href="airlineForms">Regreso a formulario</a>
     </body>
 </html>

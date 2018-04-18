@@ -5,21 +5,13 @@
  */
 package com.airline.controllers;
 
-import com.airline.models.FlightClass;
 import com.airline.models.Gender;
 import com.airline.models.Passenger;
-import com.airline.models.Pilot;
-import com.airline.models.PilotRank;
 import com.airline.service.PassengerService;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

@@ -65,12 +65,13 @@ public class Flight implements Serializable {
     @JoinColumn(name = "airplane_fk")//agrega llave foranea airplain_fk
     private Airplane airplaneDetail;
 
-    public Airplane getAirplainDetail() {
+    
+    public Airplane getAirplaneDetail() {
         return airplaneDetail;
     }
 
-    public void setAirplainDetail(Airplane airplainDetail) {
-        this.airplaneDetail = airplainDetail;
+    public void setAirplaneDetail(Airplane airplaneDetail) {
+        this.airplaneDetail = airplaneDetail;
     }
 
     public FlightDestinations getFlightOrigin() {
@@ -121,13 +122,7 @@ public class Flight implements Serializable {
         this.pilots = pilots;
     }
 
-    public Airplane getAirplaneDetail() {
-        return airplaneDetail;
-    }
 
-    public void setAirplaneDetail(Airplane airplaneDetail) {
-        this.airplaneDetail = airplaneDetail;
-    }
 
     @Override
     public int hashCode() {

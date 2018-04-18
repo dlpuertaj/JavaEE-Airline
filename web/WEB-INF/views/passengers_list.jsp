@@ -63,5 +63,7 @@
                 }
             %>
         </table>
+        <a href="">Inicio</a>
+        <a href="airlineForms">Regreso a formulario</a>
     </body>
 </html>

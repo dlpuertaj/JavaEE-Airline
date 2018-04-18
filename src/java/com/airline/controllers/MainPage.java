@@ -9,6 +9,7 @@ import com.airline.models.Passenger;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,7 +43,8 @@ public class MainPage extends HttpServlet {
         
         ArrayList<Passenger> pList = (ArrayList<Passenger>) context.getAttribute("passengers");
         
-        out.println("Passenger has been addend to list. Numer of passengers: "+pList.size());
+        RequestDispatcher dispatcher = request.getRequestDispatcher("index.html");
+        dispatcher.forward(request, response);
     }
 
     /**

@@ -84,7 +84,7 @@ public class AddFlight extends HttpServlet {
         Integer seating = Integer.parseInt(request.getParameter("airplane_seating"));
         plane.setSeatingCapacity(seating);
         
-        flight.setAirplainDetail(plane);
+        flight.setAirplaneDetail(plane);
         
         fs.addFlight(flight, plane);
         
