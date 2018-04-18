@@ -5,7 +5,6 @@
  */
 package com.airline.webservices.rest;
 
-import com.airline.models.Flight;
 import com.airline.models.Passenger;
 import com.airline.service.PassengerService;
 import java.util.List;
@@ -23,7 +22,7 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author dlpuertaj
  */
-@Path("/passengers")//airlineservices/rest/flights
+@Path("/passengers")//airlineservices/rest/passengers
 public class PassengerWebService {
     /*Inyectamos*/
     @PersistenceContext(unitName = "WebOnePU")

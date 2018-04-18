@@ -26,10 +26,11 @@ import javax.ws.rs.core.UriInfo;
 public class FlightWebService {
     /*Inyectamos*/
     @PersistenceContext(unitName = "WebOnePU")
-    EntityManager em;
+    EntityManager em;//Para hacer query a la base de datos
     
     @EJB
-    FlightService fs;
+    FlightService fs;//
+    
     /*Lo usaremos para construir enlaces a recursos de nuestro server*/
     @Context
     UriInfo fUriInfo;
@@ -43,6 +44,6 @@ public class FlightWebService {
     public List<Flight> getFlights(){
         List<Flight> fList = fs.getFlights();
         
-        return null;
+        return fList;
     }
 }

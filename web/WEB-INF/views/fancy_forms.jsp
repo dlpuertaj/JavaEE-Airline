@@ -13,6 +13,7 @@
     </head>
     <body>
         <h1 style="text-decoration:underline;">Fancy Forms</h1>
+        <a href="index.html">Inicio</a><br/>
         
         <h1>Add flight and airplane</h1>
         
