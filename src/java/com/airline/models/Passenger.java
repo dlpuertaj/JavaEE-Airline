@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 /**
@@ -25,6 +26,7 @@ import javax.persistence.TemporalType;
  */
 
 @Entity
+@XmlRootElement // Para que el webservice lo use y convertir el objeto a XML
 public class Passenger implements Serializable {
 
 
