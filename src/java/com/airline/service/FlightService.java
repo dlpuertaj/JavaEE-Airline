@@ -13,6 +13,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -119,8 +120,14 @@ public class FlightService {
         /*Es otra manera de buscar en la base de datos. Antes se usó un
          * namedQuery pero ahora se usa un TypedQuery*/
         TypedQuery<Flight> query = em.createQuery("SELECT f FROM Flight f",Flight.class);
-        fList = query.getResultList();
-        return fList;
+        
+        try{
+            fList = query.getResultList();
+            return fList;
+        }catch(NoResultException e){
+            e.printStackTrace();
+        }
+        return null;
     }
     
     public Flight getFlight(Integer id){

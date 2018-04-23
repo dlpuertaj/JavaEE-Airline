@@ -11,11 +11,13 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -29,8 +31,10 @@ public class PassengerService {
     @PersistenceContext(unitName = "WebOnePU")
     private EntityManager em;
     
-    public void addPassenger(Passenger p){
+    public Passenger addPassenger(Passenger p){
         em.persist(p);
+        
+        return p;
     }
     
     public void addFlightTicketToPassenger(String fId,String pId){
@@ -93,9 +97,13 @@ public class PassengerService {
         
         TypedQuery<Passenger> pQuery = em.createQuery(cPassenger);
         
-        Passenger p = pQuery.getSingleResult();
-        
-        return p;
+        try{
+            Passenger p = pQuery.getSingleResult();
+            return p;
+        }catch(NoResultException e){
+            e.printStackTrace();
+        }
+        return null;
     }
         
         

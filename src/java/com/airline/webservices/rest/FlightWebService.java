@@ -12,6 +12,7 @@ import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -41,7 +42,7 @@ public class FlightWebService {
     }
     
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_XML)
     public List<Flight> getFlights(){
         List<Flight> fList = fs.getFlights();
         
@@ -49,12 +50,15 @@ public class FlightWebService {
     }
     
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_XML)
     @Path("{flight_id}")
-    public Flight getFlight(@PathParam("flight_id") Integer flight_id){
+    public Flight getFlight(@PathParam("flight_id") Integer flightId){
         //localhost:8080/WebOne/airlineservices/rest/flights/id
-        Flight f = fs.getFlight(flight_id);
-        
+        Flight f = fs.getFlight(flightId);
+        if(f == null){
+            throw new NotFoundException("The flight with id "+flightId+" was not found");
+        }
         return f;
     }
+
 }
